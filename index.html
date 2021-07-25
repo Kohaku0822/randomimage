@@ -3,11 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <title>ランダム画像</title>
+    <script>
+        var PassSec;
+        function showPassage() {
+            PassSec++;   // カウントアップ
+            if (PassSec >= 300) {
+                f();
+                PassSec = 0;
+            }
+            var msg = PassSec + "秒";   // 表示文作成
+            document.getElementById("timer").innerHTML = msg;   // 表示更新
+        }
+        function startShowing() {
+            PassSec = 0;   // カウンタのリセット
+            PassageID = setInterval('showPassage()',1000);   // タイマーをセット(1000ms間隔)
+            document.getElementById("startcount").disabled = true;   // 開始ボタンの無効化
+        }
+        function stopShowing() {
+            clearInterval( PassageID );   // タイマーのクリア
+            document.getElementById("timer").innerHTML = "中断中";
+            document.getElementById("startcount").disabled = false;   // 開始ボタンの有効化
+        }
+    </script>
 </head>
 <body>
+    <button onclick=startShowing()>再開</button>
+    <button onclick=stopShowing()>中断</button>
+    <span id="timer">0</span>
     <button onclick="f()">画像の切替</button>
     <br>
     
