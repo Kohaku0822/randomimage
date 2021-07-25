@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+    <title>ランダム画像</title>
+</head>
+<body>
+    <button onclick="f()">画像の切替</button>
+    <br>
+    
+    <a id="image_link" href="all_card/111001.png" target="_blank">
+    <img id="image_place" src="all_card/111001.png" alt="">
+    </a>
+    
+    <script>
+        function f(){
+            let img = document.getElementById("image_place");
+            let link = document.getElementById("image_link");
+            unit_num = 3;
+            char_num = [9,9,9];
+            unit_id = Math.floor(Math.random()*unit_num) + 1;
+            char_id = Math.floor(Math.random()*char_num[unit_num-1]) + 1;
+            rare_id = Math.floor(Math.random()*4) + 1;
+            card_num = [[8,8],[8,8],[8,8],[8,8],[9,8],[8,8],[8,9],[9,8],[9,9],[0,0]
+                       [8,9],[9,8],[8,8],[8,8],[8,8],[9,8],[8,9],[8,9],[8,8],[0,0]
+                       [7,8],[7,8],[6,8],[7,8],[7,8],[6,9],[7,8],[6,8],[7,9],[0,0]];
+            console.log(char_id,rare_id,Math.floor((rare_id-1)/2),card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]);
+            card_id = Math.floor(Math.random()*card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]) + 1;
+            card_name = String(unit_id) + String(char_id) + String(rare_id) + "00" + String(card_id);
+            //document.write('<img src = all_card/' + card_name + '.png/>');
+            img.src = 'all_card/' + card_name + '.png';
+            img.alt = card_name;
+            link.href = 'all_card/' + card_name + '.png';
+        }
+    </script>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+</body>
+</html>
