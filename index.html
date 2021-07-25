@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="css/style.css">
     <title>ランダム画像</title>
     <script>
-        var PassSec;
+        var PassSec = 0;
         function showPassage() {
             PassSec++;   // カウントアップ
-            if (PassSec >= 300) {
+            if (PassSec > 300) {
                 f();
                 PassSec = 0;
             }
@@ -17,22 +17,43 @@
             document.getElementById("timer").innerHTML = msg;   // 表示更新
         }
         function startShowing() {
-            PassSec = 0;   // カウンタのリセット
+            f();
+            PassSec = 0;
             PassageID = setInterval('showPassage()',1000);   // タイマーをセット(1000ms間隔)
             document.getElementById("startcount").disabled = true;   // 開始ボタンの無効化
+            document.getElementById("startcount2").disabled = true;   // 開始ボタンの無効化
+            document.getElementById("change").disabled = true;   // 開始ボタンの無効化
+        }
+        function startShowing2() {
+            PassageID = setInterval('showPassage()',1000);   // タイマーをセット(1000ms間隔)
+            document.getElementById("startcount").disabled = true;   // 開始ボタンの無効化
+            document.getElementById("startcount2").disabled = true;   // 開始ボタンの無効化
+            document.getElementById("change").disabled = true;   // 開始ボタンの無効化
         }
         function stopShowing() {
             clearInterval( PassageID );   // タイマーのクリア
-            document.getElementById("timer").innerHTML = "中断中";
+            document.getElementById("timer").innerHTML = PassSec + "秒(中断)";
             document.getElementById("startcount").disabled = false;   // 開始ボタンの有効化
+            document.getElementById("startcount2").disabled = false;   // 開始ボタンの有効化
+            document.getElementById("change").disabled = false;   // 開始ボタンの有効化
+        }
+        function reset(){
+            PassSec = 0;
+            clearInterval( PassageID );   // タイマーのクリア
+            document.getElementById("timer").innerHTML = PassSec + "秒";
+            document.getElementById("startcount").disabled = false;   // 開始ボタンの有効化
+            document.getElementById("startcount2").disabled = false;   // 開始ボタンの有効化
+            document.getElementById("change").disabled = false;   // 開始ボタンの有効化
         }
     </script>
 </head>
 <body>
-    <button onclick=startShowing()>再開</button>
+    <button onclick=startShowing() id="startcount">再開(画像チェンジ)</button>
+    <button onclick=startShowing2() id="startcount2">再開</button>
     <button onclick=stopShowing()>中断</button>
+    <button onclick=reset()>時間リセット</button>
     <span id="timer">0</span>
-    <button onclick="f()">画像の切替</button>
+    <button onclick="f()" id="change">画像の切替</button>
     <br>
     
     <a id="image_link" href="all_card/111001.png" target="_blank">
@@ -51,7 +72,7 @@
             card_num = [[8,8],[8,8],[8,8],[8,8],[9,8],[8,8],[8,9],[9,8],[9,9],[0,0]
                        [8,9],[9,8],[8,8],[8,8],[8,8],[9,8],[8,9],[8,9],[8,8],[0,0]
                        [7,8],[7,8],[6,8],[7,8],[7,8],[6,9],[7,8],[6,8],[7,9],[0,0]];
-            console.log(char_id,rare_id,Math.floor((rare_id-1)/2),card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]);
+            //console.log(char_id,rare_id,Math.floor((rare_id-1)/2),card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]);
             card_id = Math.floor(Math.random()*card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]) + 1;
             card_name = String(unit_id) + String(char_id) + String(rare_id) + "00" + String(card_id);
             //document.write('<img src = all_card/' + card_name + '.png/>');
