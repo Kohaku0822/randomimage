@@ -62,6 +62,21 @@
     <button onclick=stopShowing()>中断</button>
     <button onclick=reset()>時間リセット</button>
     <button onclick="f()" id="change">画像の切替</button>
+    <label for="only_rare">
+        <input type = "checkbox" id = "only_rare" value = "UR_only"> URのみにする
+    </label>
+    <label for="only_after">
+        <input type = "checkbox" id = "only_after" value = "af_only"> 覚醒後のみにする
+    </label>
+    <label for="mus">
+        <input type = "checkbox" id = "mus" value = "mus" checked> μ's
+    </label>
+    <label for="aqours">
+        <input type = "checkbox" id = "aqours" value = "aqours" checked> Aqours
+    </label>
+    <label for="nizi">
+        <input type = "checkbox" id = "nizi" value = "nizi" checked> ニジガク
+    </label>
     <span id="number">111001</span>
     <br>
     
@@ -74,14 +89,42 @@
             let img = document.getElementById("image_place");
             let link = document.getElementById("image_link");
             let num = document.getElementById("number");
+            let ur = document.getElementById("only_rare");
+            let af = document.getElementById("only_after");
+            let mus = document.getElementById("mus");
+            let aqours = document.getElementById("aqours");
+            let nizi = document.getElementById("nizi");
             unit_num = 3;
             char_num = [9,9,9];
-            unit_id = Math.floor(Math.random()*unit_num) + 1;
+
+            while (1) {
+                unit_id = Math.floor(Math.random()*unit_num) + 1;
+                if (mus.checked) {
+                    if (unit_id == 1) break;
+                }
+                if (aqours.checked) {
+                    if (unit_id == 2) break;
+                }
+                if (nizi.checked) {
+                    if (unit_id == 3) break;
+                }
+            }
             char_id = Math.floor(Math.random()*char_num[unit_id-1]) + 1;
-            rare_id = Math.floor(Math.random()*4) + 1;
-            card_num = [[10,11],[10,10],[11,10],[10,10],[10,10],[10,11],[10,10],[10,10],[11,10],[0,0],
-                       [10,11],[10,10],[10,10],[10,10],[10,10],[10,10],[11,10],[10,10],[10,10],[0,0],
-                       [9,11],[8,10],[8,10],[9,10],[9,10],[8,10],[8,10],[8,10],[10,10],[0,0]];
+            while (1) {
+                rare_id = Math.floor(Math.random()*4) + 1;
+                if (ur.checked) {
+                    if (rare_id >= 3) continue;
+                }
+
+                if (af.checked) {
+                    if (rare_id == 1 || rare_id == 3) continue;
+                }
+
+                break;
+            }
+            card_num = [[13,13],[14,13],[14,14],[14,14],[14,14],[13,13],[13,14],[14,13],[14,14],[0,0],
+                        [14,14],[13,14],[14,13],[14,14],[13,14],[14,13],[13,14],[14,13],[13,14],[0,0],
+                        [13,13],[11,14],[12,13],[12,14],[12,14],[11,14],[12,13],[12,13],[13,14],[0,0]];
             //console.log(((unit_id-1) * 10) + (char_id-1),Math.floor((rare_id-1)/2),card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]);
             card_id = Math.floor(Math.random()*card_num[((unit_id-1) * 10) + (char_id-1)][Math.floor((rare_id-1)/2)]) + 1;
             if (card_id < 10){
